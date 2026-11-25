@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My To-Do List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>My To-Do List ✨</h1>
+            <p>Organize your day, one task at a time.</p>
+        </header>
+
+        <form action="/add" method="POST" class="task-form">
+            <input type="text" name="title"
+                   placeholder="Add a new task..." required>
+            <button type="submit">+ Add Task</button>
+        </form>
+
+        <h2>My Tasks</h2>
+
+        <div class="task-list">
+            {% for task in tasks %}
+            <div class="task-item">
+
+                <span class="{% if task.completed %}completed{% endif %}">
+                    {{ task.title }}
+                </span>
+
+                <div class="actions">
+                    <a href="/complete/{{ task.id }}" class="complete">
+                        {% if task.completed %}Undo{% else %}Done{% endif %}
+                    </a>
+
+                    <a href="/delete/{{ task.id }}" class="delete">
+                        Delete
+                    </a>
+                </div>
+
+            </div>
+            {% else %}
+            <p class="empty">No tasks yet. Add your first task! 🌸</p>
+            {% endfor %}
+        </div>
+
+        <footer>
+            Made with ❤️ | Stay Productive
+        </footer>
+
+    </div>
+
+</body>
+</html>
